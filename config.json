@@ -1,6 +1,6 @@
 {
-  "version": "2026-10-29",
-  "form_url": "https://forms.monday.com/forms/1a4186782275490bc50f32e6ecef4056?r=use1",
+  "version": "2026-10-29b",
+  "form_url": "https://forms.monday.com/forms/9489409c4fb79f0209de7d2e0869f00c?r=use1",
   "params": {
     "solicita": "solicita",
     "correo": "correo",
@@ -10,15 +10,17 @@
     "geo": "geo",
     "presupuesto": "presupuesto",
     "cpm": "cpm",
-    "fecha_inicio": "fecha_inicio",
-    "fecha_fin": "fecha_fin",
+    "fecha_inicio": "",
+    "fecha_fin": "",
     "esp_calendario": "esp_calendario",
     "direccion": "direccion",
     "propuesta": "propuesta",
-    "estrategia": "estrategia",
+    "estrategia": "Source",
     "prioridad": "prioridad",
     "tipo_solicitud": "tipo_solicitud",
-    "notas": "notas"
+    "notas": "comentarios",
+    "cpm_especial": "cpm_especial",
+    "calendario": "calendario"
   },
   "listas": {
     "direccion": [
@@ -45,11 +47,19 @@
       "Pauta O&O",
       "AAEE Digitales",
       "VoBo de Pauta"
+    ],
+    "cpm_especial": [
+      "Si",
+      "No",
+      "Código 8 / Plan 99",
+      "CPM en USD"
     ]
   },
   "tipo_solicitud_auto": {
     "ViX": "VIX (AAEE o Pauta)",
     "O&O": "Pauta O&O"
   },
-  "separador_multiple": ","
+  "separador_multiple": ",",
+  "calendario_formato": "{inicio},{fin}",
+  "form_url_produccion": "https://forms.monday.com/forms/1a4186782275490bc50f32e6ecef4056?r=use1"
 }

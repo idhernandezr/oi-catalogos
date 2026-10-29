@@ -41,18 +41,21 @@ En cada pregunta del form, en **Settings → Parameter**, escribe exactamente el
 | Nombre de Campaña | `campana` |
 | Geolocalización de campaña | `geo` |
 | Presupuesto | `presupuesto` |
-| CPM Especial | `cpm` |
-| Calendario (inicio / fin) | `fecha_inicio` / `fecha_fin` |
+| CPM Especial (lista) | `cpm_especial` |
+| ¿Cuál? (texto de CPM especial) | `cpm` |
+| Calendario (rango de fechas) | `calendario` → se envía como `AAAA-MM-DD,AAAA-MM-DD` (`calendario_formato`) |
 | Especificaciones Calendario | `esp_calendario` |
 | Dirección Comercial | `direccion` |
 | Tu propuesta es | `propuesta` |
 | Prioridad | `prioridad` |
-| Tipo de Solicitud | `tipo_solicitud` |
-| Estrategia | `estrategia` |
-| Notificación al Planner | `notas` |
+| Tipo de Solicitud | `tipo_solicitud` (opciones separadas por coma) |
+| Estrategia | `Source` (ya existía en el form) |
+| Notificación al Planner | `comentarios` (ya existía en el form) |
+
+El script `configurar_parametros_monday.py` los configura vía API (no sobrescribe los que ya existen salvo con `--forzar`) y avisa si las opciones de las listas no coinciden con el form.
 
 Si Monday te obliga a usar otro nombre, cambia solo el valor en `config.json` (no la clave).
-Para probar en el workspace de pre-producción, cambia `form_url` por la URL del form de pruebas.
+Hoy `form_url` apunta al form de **pruebas**. Para pasar a producción, copia el valor de `form_url_produccion` en `form_url`.
 
 ## Reglas de la plantilla
 
