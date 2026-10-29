@@ -60,7 +60,7 @@ LISTAS = {
     "direccion": [
         "Eduardo Gómez",
         "Antonio Jaques",
-        "IrasemaVargas",
+        "Irasema Vargas",
         "Begoña Castro",
         "María Fernanda Herrera",
         "Gabriel Contreras"
