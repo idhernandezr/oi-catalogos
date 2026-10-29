@@ -1,5 +1,5 @@
 {
-  "version": "2026-10-29c",
+  "version": "2026-10-29d",
   "form_url": "https://forms.monday.com/forms/9489409c4fb79f0209de7d2e0869f00c?r=use1",
   "params": {
     "solicita": "solicita",
@@ -20,7 +20,7 @@
     "tipo_solicitud": "tipo_solicitud",
     "notas": "comentarios",
     "cpm_especial": "cpm_especial",
-    "calendario": "calendario"
+    "calendario": ""
   },
   "listas": {
     "direccion": [
@@ -59,7 +59,7 @@
     "ViX": "VIX (AAEE o Pauta)",
     "O&O": "Pauta O&O"
   },
-  "separador_multiple": ",",
-  "calendario_formato": "{inicio},{fin}",
-  "form_url_produccion": "https://forms.monday.com/forms/1a4186782275490bc50f32e6ecef4056?r=use1"
+  "separador_multiple": "json",
+  "form_url_produccion": "https://forms.monday.com/forms/1a4186782275490bc50f32e6ecef4056?r=use1",
+  "calendario_en_texto": true
 }

@@ -43,12 +43,12 @@ En cada pregunta del form, en **Settings → Parameter**, escribe exactamente el
 | Presupuesto | `presupuesto` |
 | CPM Especial (lista) | `cpm_especial` |
 | ¿Cuál? (texto de CPM especial) | `cpm` |
-| Calendario (rango de fechas) | `calendario` → se envía como `AAAA-MM-DD,AAAA-MM-DD` (`calendario_formato`) |
+| Calendario (rango de fechas) | `calendario` configurado, pero Monday **no prellena** este tipo de pregunta: las fechas se envían como texto en Especificaciones Calendario (`calendario_en_texto`) |
 | Especificaciones Calendario | `esp_calendario` |
 | Dirección Comercial | `direccion` |
 | Tu propuesta es | `propuesta` |
 | Prioridad | `prioridad` |
-| Tipo de Solicitud | `tipo_solicitud` (opciones separadas por coma) |
+| Tipo de Solicitud | `tipo_solicitud` (se envía como lista: `["VIX (AAEE o Pauta)","Pauta O&O"]`) |
 | Estrategia | `Source` (ya existía en el form) |
 | Notificación al Planner | `comentarios` (ya existía en el form) |
 
