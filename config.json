@@ -1,0 +1,55 @@
+{
+  "version": "2026-10-29",
+  "form_url": "https://forms.monday.com/forms/1a4186782275490bc50f32e6ecef4056?r=use1",
+  "params": {
+    "solicita": "solicita",
+    "correo": "correo",
+    "account_manager": "account_manager",
+    "cuenta": "cuenta",
+    "campana": "campana",
+    "geo": "geo",
+    "presupuesto": "presupuesto",
+    "cpm": "cpm",
+    "fecha_inicio": "fecha_inicio",
+    "fecha_fin": "fecha_fin",
+    "esp_calendario": "esp_calendario",
+    "direccion": "direccion",
+    "propuesta": "propuesta",
+    "estrategia": "estrategia",
+    "prioridad": "prioridad",
+    "tipo_solicitud": "tipo_solicitud",
+    "notas": "notas"
+  },
+  "listas": {
+    "direccion": [
+      "Eduardo Gomez",
+      "Antonio Rivera",
+      "Irasema Vargas",
+      "Begoña Casto",
+      "Maria Fernanda Herrera",
+      "Gabriel Contreras"
+    ],
+    "propuesta": [
+      "Digital",
+      "Multi",
+      "Regional",
+      "Mid Market"
+    ],
+    "prioridad": [
+      "Alta",
+      "Media",
+      "Baja"
+    ],
+    "tipo_solicitud": [
+      "VIX (AAEE o Pauta)",
+      "Pauta O&O",
+      "AAEE Digitales",
+      "VoBo de Pauta"
+    ]
+  },
+  "tipo_solicitud_auto": {
+    "ViX": "VIX (AAEE o Pauta)",
+    "O&O": "Pauta O&O"
+  },
+  "separador_multiple": ","
+}

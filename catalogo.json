@@ -1,0 +1,259 @@
+{
+  "version": "2026-10-29",
+  "productos": [
+    {
+      "categoria": "ViX",
+      "vertical": "VIX OTT",
+      "tipo": "VIDEO",
+      "producto": "ESSENTIAL CANVAS",
+      "medidas": "640x480",
+      "ctr": 0.015,
+      "completion": null
+    },
+    {
+      "categoria": "ViX",
+      "vertical": "VIX OTT",
+      "tipo": "VIDEO",
+      "producto": "SHOPPABLE TV",
+      "medidas": "640x480",
+      "ctr": 0.015,
+      "completion": null
+    },
+    {
+      "categoria": "ViX",
+      "vertical": "VIX OTT",
+      "tipo": "VIDEO",
+      "producto": "QR VIDEO",
+      "medidas": "640x480",
+      "ctr": null,
+      "completion": 1.0
+    },
+    {
+      "categoria": "ViX",
+      "vertical": "VIX OTT",
+      "tipo": "VIDEO",
+      "producto": "VIDEO IN STREAM -30 S",
+      "medidas": "640x480",
+      "ctr": null,
+      "completion": 1.0
+    },
+    {
+      "categoria": "ViX",
+      "vertical": "VIX OTT",
+      "tipo": "VIDEO",
+      "producto": "VIDEO IN STREAM 30- 60 S",
+      "medidas": "640x480",
+      "ctr": null,
+      "completion": 1.0
+    },
+    {
+      "categoria": "ViX",
+      "vertical": "VIX OTT",
+      "tipo": "VIDEO",
+      "producto": "PAUSE AD",
+      "medidas": "1920x1080",
+      "ctr": null,
+      "completion": null
+    },
+    {
+      "categoria": "ViX",
+      "vertical": "VIX OTT",
+      "tipo": "VIDEO",
+      "producto": "MICROS",
+      "medidas": "640x480 | 9x16",
+      "ctr": null,
+      "completion": 1.0
+    },
+    {
+      "categoria": "ViX",
+      "vertical": "VIX OTT",
+      "tipo": "VIDEO",
+      "producto": "SHORT",
+      "medidas": "640x480 | 9x16",
+      "ctr": null,
+      "completion": 1.0
+    },
+    {
+      "categoria": "ViX",
+      "vertical": "VIDEO CROSS PLATFORM RON + VIX",
+      "tipo": "VIDEO",
+      "producto": "VIDEO CROSS PLATFORM",
+      "medidas": "640x480 | 1200x675 | 480x360",
+      "ctr": 0.005,
+      "completion": 0.92
+    },
+    {
+      "categoria": "O&O",
+      "vertical": "VIDEO CROSS PLATFORM RON + VIX",
+      "tipo": "VIDEO",
+      "producto": "VIDEO CROSS PLATFORM",
+      "medidas": "640x480 | 1200x675 | 480x360",
+      "ctr": 0.005,
+      "completion": 0.92
+    },
+    {
+      "categoria": "O&O",
+      "vertical": "TELEVISA ADS RON",
+      "tipo": "VIDEO",
+      "producto": "VIDEO IN STREAM",
+      "medidas": "640x480",
+      "ctr": 0.0115,
+      "completion": 0.93
+    },
+    {
+      "categoria": "On the Road",
+      "vertical": "BULLMEDIA",
+      "tipo": "VIDEO",
+      "producto": "ON THE ROAD",
+      "medidas": "640x480",
+      "ctr": null,
+      "completion": null
+    },
+    {
+      "categoria": "YOU TUBE",
+      "vertical": "YOU TUBE",
+      "tipo": "VIDEO",
+      "producto": "VIDEO YOUTUBE -14S",
+      "medidas": "480x360",
+      "ctr": 0.0043,
+      "completion": 0.88
+    },
+    {
+      "categoria": "YOU TUBE",
+      "vertical": "YOU TUBE",
+      "tipo": "VIDEO",
+      "producto": "VIDEO YOUTUBE +16S",
+      "medidas": "480x361",
+      "ctr": 0.003,
+      "completion": 0.27
+    },
+    {
+      "categoria": "O&O",
+      "vertical": "TELEVISA ADS RON",
+      "tipo": "DISPLAY",
+      "producto": "BOX BANNER | SUPER BANNER | DISPLAY",
+      "medidas": "300x250 | 728x90 | 320x50 | 955x90 | 970x250",
+      "ctr": 0.0013,
+      "completion": null
+    },
+    {
+      "categoria": "O&O",
+      "vertical": "TELEVISA ADS RON",
+      "tipo": "DISPLAY",
+      "producto": "TUBET",
+      "medidas": "300x250 | 728x90 | 320x50",
+      "ctr": 0.0013,
+      "completion": null
+    },
+    {
+      "categoria": "On the Road",
+      "vertical": "BULLMEDIA",
+      "tipo": "DISPLAY",
+      "producto": "ON THE ROAD",
+      "medidas": "300x250 | 728x90 | 320x50 | 970x250 | 970x90",
+      "ctr": null,
+      "completion": null
+    },
+    {
+      "categoria": "O&O",
+      "vertical": "TELEVISA ADS RON",
+      "tipo": "HI IMPACT",
+      "producto": "HIGH IMPACT",
+      "medidas": "1x1",
+      "ctr": 0.01,
+      "completion": null
+    },
+    {
+      "categoria": "O&O",
+      "vertical": "TELEVISA ADS RON",
+      "tipo": "HI IMPACT",
+      "producto": "TAKE OVER",
+      "medidas": "1x1",
+      "ctr": 0.01,
+      "completion": null
+    },
+    {
+      "categoria": "O&O",
+      "vertical": "TELEVISA ADS RON",
+      "tipo": "HI IMPACT",
+      "producto": "SHOP SHELF",
+      "medidas": "1x1",
+      "ctr": 0.0003,
+      "completion": null
+    },
+    {
+      "categoria": "O&O",
+      "vertical": "TELEVISA ADS RON",
+      "tipo": "HI IMPACT",
+      "producto": "SHOPPABLE VIDEO",
+      "medidas": "1x1",
+      "ctr": 0.0286,
+      "completion": 0.72
+    },
+    {
+      "categoria": "O&O",
+      "vertical": "TELEVISA ADS RON",
+      "tipo": "ROAD BLOCK",
+      "producto": "ROADBLOCK ESTÁNDAR",
+      "medidas": "300x250 | 728x90 | 320x50 | 955x90 | 970x250",
+      "ctr": null,
+      "completion": null
+    },
+    {
+      "categoria": "O&O",
+      "vertical": "TELEVISA ADS RON",
+      "tipo": "ROAD BLOCK",
+      "producto": "ROADBLOCK HIGH IMPACT",
+      "medidas": "1x1",
+      "ctr": null,
+      "completion": null
+    },
+    {
+      "categoria": "PODCAST",
+      "vertical": "PODCAST RON",
+      "tipo": "AUDIO AD",
+      "producto": "AUDIO AD",
+      "medidas": "MP3",
+      "ctr": null,
+      "completion": null
+    },
+    {
+      "categoria": "PODCAST",
+      "vertical": "PODCAST VIX",
+      "tipo": "VIDEO",
+      "producto": "VIDEO PODCAST",
+      "medidas": "640x480",
+      "ctr": null,
+      "completion": null
+    }
+  ],
+  "frecuencias": [
+    "1 cada 20 | 3x1 Día",
+    "3x1 Día",
+    "3x1 Semana",
+    "2x1 Semana",
+    "4 Life Time",
+    "6 Life Time",
+    "7 Life Time",
+    "8 Life Time"
+  ],
+  "plataformas": [
+    "Web",
+    "Mobile Web",
+    "App",
+    "CTV",
+    "DOOH"
+  ],
+  "tipos_costo": [
+    "CPM"
+  ],
+  "costum_field": [
+    "No aplica",
+    "Plan 99",
+    "Código 8"
+  ],
+  "monedas": [
+    "MXN",
+    "USD"
+  ]
+}
