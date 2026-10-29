@@ -1,5 +1,5 @@
 {
-  "version": "2026-10-29b",
+  "version": "2026-10-29c",
   "form_url": "https://forms.monday.com/forms/9489409c4fb79f0209de7d2e0869f00c?r=use1",
   "params": {
     "solicita": "solicita",
@@ -24,16 +24,16 @@
   },
   "listas": {
     "direccion": [
-      "Eduardo Gomez",
-      "Antonio Rivera",
-      "Irasema Vargas",
-      "Begoña Casto",
-      "Maria Fernanda Herrera",
+      "Eduardo Gómez",
+      "Antonio Jaques",
+      "IrasemaVargas",
+      "Begoña Castro",
+      "María Fernanda Herrera",
       "Gabriel Contreras"
     ],
     "propuesta": [
       "Digital",
-      "Multi",
+      "Multiplataforma",
       "Regional",
       "Mid Market"
     ],
@@ -49,7 +49,7 @@
       "VoBo de Pauta"
     ],
     "cpm_especial": [
-      "Si",
+      "Sí",
       "No",
       "Código 8 / Plan 99",
       "CPM en USD"

@@ -58,16 +58,16 @@ REVISAR = {}
 # Opciones que usa la herramienta en cada lista (deben coincidir con el form)
 LISTAS = {
     "direccion": [
-        "Eduardo Gomez",
-        "Antonio Rivera",
-        "Irasema Vargas",
-        "Begoña Casto",
-        "Maria Fernanda Herrera",
+        "Eduardo Gómez",
+        "Antonio Jaques",
+        "IrasemaVargas",
+        "Begoña Castro",
+        "María Fernanda Herrera",
         "Gabriel Contreras"
     ],
     "propuesta": [
         "Digital",
-        "Multi",
+        "Multiplataforma",
         "Regional",
         "Mid Market"
     ],
@@ -83,7 +83,7 @@ LISTAS = {
         "VoBo de Pauta"
     ],
     "cpm_especial": [
-        "Si",
+        "Sí",
         "No",
         "Código 8 / Plan 99",
         "CPM en USD"
