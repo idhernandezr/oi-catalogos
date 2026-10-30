@@ -4,185 +4,298 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Generador de OI</title>
+<meta name="color-scheme" content="light dark">
 <style>
-  :root { --ink:#111827; --muted:#4b5563; --line:#d1d5db; --soft:#eef2f7; --brand:#1f3a5f; --brand2:#2b4c7e;
-          --bg:#f5f7fa; --card:#ffffff; --danger:#b91c1c; --ok:#166534; --okbg:#e8f5ec; --warnbg:#fff4e5; --warn:#8a4b00; }
-  * { box-sizing:border-box; }
-  body { margin:0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color:var(--ink); background:var(--bg); font-size:14px; }
-  main { max-width:1180px; margin:0 auto; padding:24px 20px 60px; }
-  header.top { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; flex-wrap:wrap; margin-bottom:18px; }
-  h1 { font-size:22px; margin:0 0 4px; }
-  h2 { font-size:17px; margin:0 0 4px; }
-  h3 { font-size:14px; margin:18px 0 10px; color:var(--brand); text-transform:uppercase; letter-spacing:.04em; }
-  .sub { color:var(--muted); margin:0; }
-  .status { font-size:12.5px; padding:7px 12px; border-radius:8px; background:var(--soft); color:var(--ink); max-width:520px; line-height:1.45; }
-  .status.ok { background:var(--okbg); color:var(--ok); }
-  .status.warn { background:var(--warnbg); color:var(--warn); }
-  .status a { color:inherit; font-weight:600; }
-  .home { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:18px; margin-top:8px; }
-  .mod { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px; cursor:pointer; text-align:left; font:inherit; color:inherit; transition:.15s; }
-  .mod:hover, .mod:focus-visible { border-color:var(--brand); box-shadow:0 0 0 3px #dbe5f3; outline:none; }
-  .mod .n { display:inline-block; font-size:12px; font-weight:700; color:var(--brand); background:#e3eaf5; border-radius:6px; padding:3px 8px; margin-bottom:10px; }
-  .mod p { color:var(--muted); margin:6px 0 0; line-height:1.5; }
-  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:20px; margin-top:16px; min-width:0; }
-  .back { background:none; border:0; color:var(--brand); font:inherit; font-weight:600; cursor:pointer; padding:0; margin-bottom:10px; }
-  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:12px 14px; }
-  .f { display:flex; flex-direction:column; gap:4px; min-width:0; }
-  .f.wide { grid-column:1/-1; }
-  .f label, .lbl { font-size:12.5px; font-weight:600; color:var(--ink); }
-  .f small { color:var(--muted); font-size:11.5px; }
-  .req::after { content:" *"; color:var(--danger); }
-  input, select, textarea { font:inherit; color:var(--ink); background:#fff; border:1px solid #b8c0cc; border-radius:8px; padding:8px 10px; width:100%; min-width:0; }
-  textarea { min-height:64px; resize:vertical; }
-  input:focus, select:focus, textarea:focus { outline:2px solid #9db6dc; border-color:var(--brand); }
-  input[readonly] { background:var(--soft); }
-  .bad { border-color:var(--danger) !important; background:#fff5f5; }
-  .err { color:var(--danger); font-size:12.5px; margin-top:8px; line-height:1.5; }
-  .checks { display:flex; flex-wrap:wrap; gap:8px 16px; padding-top:4px; }
-  .checks label { font-weight:400; display:flex; gap:6px; align-items:center; font-size:13.5px; }
-  .checks input { width:auto; }
-  button.btn, a.btn { background:var(--brand); color:#fff; border:1px solid var(--brand); padding:10px 16px; border-radius:8px; font:inherit; font-weight:600; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:6px; }
-  button.btn:hover { background:var(--brand2); }
-  button.sec { background:#fff; color:var(--brand); }
-  button.sec:hover { background:#eef3fa; }
-  .row { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:14px; }
-  .line { border:1px solid var(--line); border-radius:10px; padding:14px; margin-top:12px; background:#fbfcfe; }
-  .line-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
-  .line-head b { color:var(--brand); }
-  .del { background:none; border:0; color:var(--danger); font:inherit; cursor:pointer; font-weight:600; }
-  .lgrid { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:10px 12px; }
-  .lgrid .span2 { grid-column:span 2; }
-  .calc { font-size:12.5px; color:var(--muted); margin-top:8px; }
-  .calc b { color:var(--ink); }
-  .totbar { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-top:14px; padding-top:14px; border-top:1px solid var(--line); }
-  .total { font-size:15px; } .total b { font-size:17px; }
-  .drop { display:block; border:2px dashed #8a97aa; border-radius:12px; background:#fff; padding:30px 20px; text-align:center; cursor:pointer; }
-  .drop.over { border-color:var(--brand); background:#eef4fb; }
-  .drop strong { display:block; font-size:16px; margin-bottom:4px; }
-  .drop small { color:var(--muted); }
-  .hidden-input { display:none; }
-  table.kv { width:100%; border-collapse:collapse; font-size:13px; }
-  table.kv td { padding:6px; border-bottom:1px solid var(--line); vertical-align:top; }
-  table.kv td:first-child { color:var(--muted); width:40%; }
-  .linkbox { width:100%; font-family:ui-monospace, monospace; font-size:12px; height:70px; margin-top:8px; }
-  .len { font-size:12.5px; color:var(--muted); margin-top:6px; }
-  .note { font-size:12.5px; color:var(--muted); line-height:1.5; margin:12px 0 0; }
-  .toast { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:var(--ink); color:#fff; padding:10px 16px; border-radius:8px; font-size:13px; opacity:0; transition:.2s; pointer-events:none; }
-  .toast.on { opacity:1; }
-  .preview { margin-top:12px; max-height:320px; overflow:auto; border:1px solid var(--line); border-radius:8px; }
-  .preview table { border-collapse:collapse; font-size:11px; white-space:nowrap; }
-  .preview td { border:1px solid #e5e9f0; padding:3px 6px; }
-  [hidden] { display:none !important; }
-  @media (max-width:640px) { .lgrid .span2 { grid-column:span 1; } }
+:root{
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Inter, system-ui, sans-serif;
+  --bg:#F2F2F7; --card:#FFFFFF; --fill:#F2F2F7; --fill2:#E5E5EA; --sep:#D1D1D6; --sep-strong:#C7C7CC;
+  --ink:#1D1D1F; --ink2:#3C3C43; --muted:#6E6E73;
+  --accent:#007AFF; --accent-ink:#0062CC; --accent-tint:rgba(0,122,255,.12); --on-accent:#FFFFFF;
+  --green:#248A3D; --green-tint:rgba(52,199,89,.14); --red:#D70015; --red-tint:rgba(255,59,48,.10); --orange:#A05A00; --orange-tint:rgba(255,149,0,.14);
+  --glass: rgba(255,255,255,.72); --glass-border: rgba(0,0,0,.08);
+  --r-s:8px; --r-m:12px; --r-l:20px;
+  --spring: cubic-bezier(.32,.72,0,1);
+  --shadow: 0 1px 2px rgba(0,0,0,.04), 0 8px 24px rgba(0,0,0,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#000000; --card:#1C1C1E; --fill:#2C2C2E; --fill2:#3A3A3C; --sep:#38383A; --sep-strong:#48484A;
+    --ink:#F5F5F7; --ink2:#EBEBF5; --muted:#AEAEB2;
+    --accent:#0A84FF; --accent-ink:#409CFF; --accent-tint:rgba(10,132,255,.20); --on-accent:#FFFFFF;
+    --green:#30D158; --green-tint:rgba(48,209,88,.16); --red:#FF6961; --red-tint:rgba(255,69,58,.16); --orange:#FFB340; --orange-tint:rgba(255,159,10,.16);
+    --glass: rgba(28,28,30,.72); --glass-border: rgba(255,255,255,.10);
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.4);
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:var(--font);font-size:.9375rem;line-height:1.38;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased}
+[hidden]{display:none!important}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:none;box-shadow:0 0 0 4px var(--accent-tint),0 0 0 1.5px var(--accent);border-radius:var(--r-m)}
+
+/* Capa de controles: barra superior translúcida */
+.nav{position:sticky;top:0;z-index:20;background:var(--glass);-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid var(--glass-border)}
+.nav-in{max-width:1100px;margin:0 auto;height:52px;padding:0 20px;display:flex;align-items:center;gap:12px}
+.nav-title{font-weight:600;font-size:1.0625rem;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.navback{display:inline-flex;align-items:center;gap:2px;min-height:44px;padding:0 8px 0 0;background:none;border:0;color:var(--accent-ink);font-size:1.0625rem;cursor:pointer}
+.navback svg{width:22px;height:22px}
+.status{display:inline-flex;align-items:center;gap:6px;font-size:.8125rem;padding:6px 12px;border-radius:999px;background:var(--fill);color:var(--ink2);max-width:min(520px,60vw);line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.status br{display:none}
+.status::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--muted);flex:none}
+.status.ok{background:var(--green-tint);color:var(--ink)} .status.ok::before{background:#34C759}
+.status.warn{background:var(--orange-tint);color:var(--ink)} .status.warn::before{background:#FF9500}
+.status a{color:var(--accent-ink);font-weight:600}
+
+/* Capa de contenido */
+main{max-width:1100px;margin:0 auto;padding:12px 20px 140px}
+.large{font-size:2.125rem;font-weight:700;letter-spacing:-.02em;margin:16px 0 4px;line-height:1.15}
+.lead{color:var(--muted);font-size:1.0625rem;margin:0 0 24px}
+h2{font-size:1.375rem;font-weight:700;letter-spacing:-.01em;margin:0}
+.sub{color:var(--muted);margin:4px 0 0}
+
+/* Inicio */
+.home{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.mod{display:flex;flex-direction:column;gap:12px;text-align:left;background:var(--card);border:0;border-radius:var(--r-l);padding:24px;cursor:pointer;box-shadow:var(--shadow);transition:transform .25s var(--spring),box-shadow .25s var(--spring);min-height:44px}
+.mod:hover{transform:translateY(-2px)} .mod:active{transform:scale(.98)}
+.mod .ico{width:48px;height:48px;border-radius:12px;display:grid;place-items:center;background:var(--accent-tint);color:var(--accent-ink)}
+.mod .ico svg{width:26px;height:26px}
+.mod h2{font-size:1.25rem}
+.mod p{margin:0;color:var(--muted);line-height:1.45}
+.mod .go{margin-top:auto;color:var(--accent-ink);font-weight:600;display:inline-flex;align-items:center;gap:4px}
+.mod .n{display:none}
+
+/* Secciones agrupadas (inset grouped) */
+.group{margin-top:28px}
+.ghead{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:0 4px 8px}
+.ghead h3{margin:0;font-size:.8125rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.card{background:var(--card);border-radius:var(--r-l);padding:20px;box-shadow:var(--shadow);min-width:0}
+.gfoot{font-size:.8125rem;color:var(--muted);margin:8px 4px 0;line-height:1.45}
+.card h3{display:none}
+
+/* Campos */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+.f{display:flex;flex-direction:column;gap:6px;min-width:0}
+.f.wide{grid-column:1/-1}
+.f label,.lbl{font-size:.8125rem;font-weight:600;color:var(--ink2)}
+.f small{font-size:.75rem;color:var(--muted)}
+.req::after{content:" *";color:var(--red)}
+input,select,textarea{width:100%;min-width:0;min-height:44px;padding:10px 12px;border-radius:var(--r-m);border:1px solid transparent;background:var(--fill);color:var(--ink);transition:background .2s,border-color .2s,box-shadow .2s}
+select{appearance:none;-webkit-appearance:none;padding-right:34px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238E8E93' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+textarea{min-height:80px;resize:vertical;line-height:1.4}
+input::placeholder,textarea::placeholder{color:var(--muted)}
+input:focus,select:focus,textarea:focus{outline:none;background-color:var(--card);border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-tint)}
+input[readonly]{background:transparent;border:1px dashed var(--sep-strong);color:var(--ink2)}
+input[type=date]{font-variant-numeric:tabular-nums}
+.bad{border-color:var(--red)!important;background-color:var(--red-tint)!important}
+.checks{display:flex;flex-wrap:wrap;gap:8px}
+.checks label{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;border-radius:999px;background:var(--fill);font-weight:500;font-size:.875rem;color:var(--ink);cursor:pointer;transition:background .2s}
+.checks label:has(input:checked){background:var(--accent-tint);color:var(--accent-ink)}
+.checks input{width:18px;height:18px;min-height:0;accent-color:var(--accent);margin:0}
+
+/* Líneas de pauta */
+.line{border-radius:var(--r-m);background:var(--card);padding:16px;border:1px solid var(--sep);margin-top:12px;animation:in .3s var(--spring)}
+.line:first-child{margin-top:0}
+@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.line-head{display:flex;justify-content:space-between;align-items:center;margin:-4px 0 12px}
+.line-head b{font-size:1.0625rem;font-weight:600}
+.del{display:inline-flex;align-items:center;min-height:44px;padding:0 4px;background:none;border:0;color:var(--red);font-weight:500;cursor:pointer}
+.lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.lgrid .span2{grid-column:span 2}
+.calc{margin-top:12px;padding:10px 12px;border-radius:var(--r-s);background:var(--fill);font-size:.8125rem;color:var(--ink2);font-variant-numeric:tabular-nums;line-height:1.6}
+.calc b{color:var(--ink);font-weight:600}
+.totbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:16px}
+.totbar .total{display:none}
+
+/* Botones */
+.btn,a.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:var(--r-m);border:0;font-weight:600;font-size:.9375rem;cursor:pointer;text-decoration:none;background:var(--accent);color:var(--on-accent);transition:transform .2s var(--spring),opacity .2s,background .2s}
+.btn svg{width:18px;height:18px;flex:none}
+.btn:hover{filter:brightness(1.06)} .btn:active{transform:scale(.97)}
+.btn.sec{background:var(--accent-tint);color:var(--accent-ink)}
+.btn.plain{background:transparent;color:var(--accent-ink);padding:0 10px}
+.btn:disabled{opacity:.4;cursor:default;transform:none}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:16px}
+
+/* Barra de acciones flotante (capa de controles) */
+.actionbar{position:fixed;left:50%;bottom:max(16px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:30;width:min(1060px,calc(100% - 24px));display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:10px 10px 10px 20px;border-radius:22px;background:var(--glass);-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);border:1px solid var(--glass-border);box-shadow:0 10px 40px rgba(0,0,0,.14)}
+.kpi{display:flex;flex-direction:column;margin-right:auto;min-width:150px}
+.kpi span{font-size:.75rem;color:var(--ink2);font-weight:500}
+.kpi strong{font-size:1.5rem;font-weight:700;letter-spacing:-.01em;font-variant-numeric:tabular-nums;line-height:1.15}
+.kpi small{font-size:.75rem;color:var(--ink2)}
+.actionbar .acts{display:flex;gap:8px;flex-wrap:wrap}
+.actionbar .err{flex-basis:100%;margin:0 0 2px}
+.actionbar .err:empty{display:none}
+
+/* Mensajes */
+.err{display:flex;gap:8px;align-items:flex-start;font-size:.8125rem;color:var(--red);font-weight:500;margin-top:12px;line-height:1.45}
+.err:not(:empty)::before{content:"!";flex:none;width:18px;height:18px;border-radius:50%;background:var(--red);color:#fff;font-size:.75rem;font-weight:700;display:grid;place-items:center;margin-top:1px}
+.note{font-size:.8125rem;color:var(--muted);line-height:1.5;margin:12px 0 0}
+.note b{color:var(--ink2)}
+.linkbox{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:.75rem;min-height:72px;margin-top:12px}
+.len{font-size:.75rem;color:var(--muted);margin-top:6px;font-variant-numeric:tabular-nums}
+.callout{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:var(--r-m);background:var(--accent-tint);color:var(--ink);font-size:.875rem;line-height:1.45;margin-top:12px}
+.callout svg{width:20px;height:20px;color:var(--accent-ink);flex:none;margin-top:1px}
+
+/* Arrastrar OI */
+.drop{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;padding:44px 20px;border-radius:var(--r-l);background:var(--card);border:2px dashed var(--sep-strong);cursor:pointer;transition:border-color .25s var(--spring),background .25s var(--spring),transform .25s var(--spring)}
+.drop:hover{border-color:var(--accent)}
+.drop.over{border-color:var(--accent);background:var(--accent-tint);transform:scale(1.01)}
+.drop .ico{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;background:var(--accent-tint);color:var(--accent-ink)}
+.drop .ico svg{width:28px;height:28px}
+.drop strong{font-size:1.0625rem;font-weight:600}
+.drop small{color:var(--muted)}
+.hidden-input{display:none}
+.preview{max-height:340px;overflow:auto;border-radius:var(--r-m);background:var(--fill)}
+.preview table{border-collapse:collapse;font-size:.75rem;white-space:nowrap;font-variant-numeric:tabular-nums}
+.preview td{padding:6px 10px;border-bottom:1px solid var(--sep);color:var(--ink)}
+.sheetpick{display:flex;align-items:center;gap:8px;font-size:.8125rem;font-weight:600;color:var(--ink2)}
+.sheetpick select{width:auto;min-width:180px}
+
+/* Toast */
+.toast{position:fixed;left:50%;top:64px;transform:translate(-50%,-8px);z-index:40;padding:10px 18px;border-radius:999px;background:var(--glass);-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);border:1px solid var(--glass-border);box-shadow:0 8px 24px rgba(0,0,0,.12);color:var(--ink);font-size:.875rem;font-weight:500;opacity:0;pointer-events:none;transition:opacity .25s var(--spring),transform .25s var(--spring)}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:640px){
+  .large{font-size:1.75rem} .lgrid .span2{grid-column:span 1}
+  .nav-in{padding:0 16px} main{padding:8px 16px 200px}
+  .actionbar{padding:10px 12px;gap:8px;border-radius:20px} .kpi{min-width:0;flex-direction:row;align-items:baseline;gap:8px;width:100%}
+  .kpi strong{font-size:1.25rem}
+  .actionbar .acts{width:100%;display:grid;grid-template-columns:1fr 1fr 1.7fr;gap:8px} .actionbar .acts .btn{padding:0 8px;font-size:.875rem;white-space:nowrap;gap:6px}
+  .actionbar .err{font-size:.75rem}
+  .nav-title{display:none} .status{max-width:none;flex:1;justify-content:flex-start}
+}
+@media (prefers-reduced-motion: reduce){ *,*::before,*::after{animation:none!important;transition:none!important} }
+@media (prefers-reduced-transparency: reduce){ .nav,.actionbar,.toast{background:var(--card);-webkit-backdrop-filter:none;backdrop-filter:none} }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))){ .nav,.actionbar,.toast{background:var(--card)} }
 </style>
 </head>
 <body>
-<main>
-  <header class="top">
-    <div>
-      <h1>Generador de OI</h1>
-      <p class="sub">Orden de Inserción → Excel, PDF y brief de Monday. Todo se procesa en tu equipo.</p>
-    </div>
-    <div id="status" class="status">Buscando catálogo actualizado…</div>
-  </header>
+<header class="nav">
+  <div class="nav-in">
+    <button class="navback" id="navBack" data-go="home" hidden aria-label="Volver al inicio">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>Inicio
+    </button>
+    <span class="nav-title" id="navTitle">Generador de OI</span>
+    <div id="status" class="status" role="status">Buscando catálogo actualizado…</div>
+  </div>
+</header>
 
+<main>
   <!-- Inicio -->
   <section id="home">
+    <h1 class="large">Generador de OI</h1>
+    <p class="lead">Orden de Inserción → Excel, PDF y brief de Monday. Todo se procesa en tu equipo.</p>
     <div class="home">
       <button class="mod" data-go="m2">
-        <span class="n">Módulo 1</span>
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M8 13h2M14 13h2M8 17h2M14 17h2"/></svg></span>
         <h2>Genera aquí tu OI</h2>
         <p>Captura la campaña, elige productos del catálogo (hasta 15 líneas) y descarga la OI en Excel o PDF, o envíala al form de Monday.</p>
+        <span class="go">Empezar <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span>
       </button>
       <button class="mod" data-go="m1">
-        <span class="n">Módulo 2</span>
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5"/><path d="M12 3v12"/></svg></span>
         <h2>Arrastra una OI hecha a mano</h2>
         <p>Suelta una OI en Excel. Se leen los campos que se puedan identificar, completas lo que falte y se abre el form de Monday prellenado.</p>
+        <span class="go">Abrir <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span>
       </button>
     </div>
   </section>
 
   <!-- Módulo: Genera tu OI -->
   <section id="m2" hidden>
-    <button class="back" data-go="home">← Volver</button>
-    <h2>Genera aquí tu OI</h2>
-    <p class="sub">Los campos con * son obligatorios. Las fechas no pueden ser anteriores a hoy.</p>
+    <h1 class="large">Genera tu OI</h1>
+    <p class="lead">Los campos con <span style="color:var(--red)">*</span> son obligatorios. Las fechas no pueden ser anteriores a hoy.</p>
 
-    <div class="card">
-      <h3 style="margin-top:0">Información de la campaña</h3>
-      <div class="grid" id="oiFields"></div>
-      <h3>Información de pago</h3>
-      <div class="grid" id="payFields"></div>
+    <div class="group">
+      <div class="ghead"><h3>Información de la campaña</h3></div>
+      <div class="card"><div class="grid" id="oiFields"></div></div>
+    </div>
+    <div class="group">
+      <div class="ghead"><h3>Información de pago</h3></div>
+      <div class="card"><div class="grid" id="payFields"></div></div>
+      <p class="gfoot">Los campos vacíos quedan como "Pendiente de llenar por ventas" en la OI.</p>
     </div>
 
-    <div class="card">
-      <h3 style="margin-top:0">Pauta</h3>
-      <div id="lines"></div>
-      <div class="totbar">
-        <button class="btn sec" id="addLine">+ Agregar línea</button>
-        <span class="total">Inversión total: <b id="totalInv">$0.00</b> <span id="lineCount" class="sub"></span></span>
+    <div class="group">
+      <div class="ghead"><h3>Pauta</h3><span class="sub" id="lineCount" style="font-size:.8125rem"></span></div>
+      <div class="card">
+        <div id="lines"></div>
+        <div class="totbar">
+          <button class="btn sec" id="addLine">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Agregar línea
+          </button>
+        </div>
       </div>
+      <p class="gfoot">Medidas, CTR y Completion se llenan solos según el producto. Impresiones contratadas = inversión ÷ tarifa × 1,000.</p>
     </div>
 
-    <div class="card">
-      <h3 style="margin-top:0">Datos para el brief de Monday</h3>
-      <p class="note" style="margin-top:0">Solo se usan al enviar al form. Quién solicita, Cuenta, Campaña, Dirección Comercial, Presupuesto y Calendario se toman de arriba.</p>
-      <div class="grid" id="m2Monday" style="margin-top:12px"></div>
+    <div class="group">
+      <div class="ghead"><h3>Datos para el brief de Monday</h3></div>
+      <div class="card"><div class="grid" id="m2Monday"></div></div>
+      <p class="gfoot">Solo se usan al enviar al form. Quién solicita, Cuenta, Campaña, Dirección Comercial, Presupuesto y fechas se toman de arriba.</p>
     </div>
 
-    <div class="card">
-      <div class="row" style="margin-top:0">
-        <button class="btn" id="btnXlsx">Descargar Excel</button>
-        <button class="btn" id="btnPdf">Descargar PDF</button>
-        <button class="btn" id="btnMonday">Enviar al form de Monday</button>
-      </div>
-      <div id="m2Err" class="err"></div>
-      <div id="m2Link" hidden>
-        <textarea class="linkbox" id="m2LinkText" readonly></textarea>
+    <div class="group" id="m2Link" hidden>
+      <div class="ghead"><h3>Link prellenado</h3></div>
+      <div class="card">
+        <div class="callout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          <span><b>En el form completa a mano</b> el Calendario (las fechas van escritas en "Especificaciones Calendario") y adjunta en "Adjuntos" el PDF que ya se descargó.</span></div>
+        <textarea class="linkbox" id="m2LinkText" readonly aria-label="Link prellenado"></textarea>
         <div class="len" id="m2Len"></div>
-        <div class="row"><button class="btn sec" id="m2Copy">Copiar link</button></div>
-        <p class="note"><b>En el form completa a mano:</b> el <b>Calendario</b> (las fechas van escritas en "Especificaciones Calendario") y adjunta el PDF en "Adjuntos", que ya se descargó en tu carpeta de descargas.</p>
+        <div class="row"><button class="btn plain" id="m2Copy">Copiar link</button></div>
+      </div>
+    </div>
+
+    <div class="actionbar" role="toolbar" aria-label="Acciones de la OI">
+      <div id="m2Err" class="err" role="alert"></div>
+      <div class="kpi"><span>Inversión total</span><strong id="totalInv">$0.00</strong></div>
+      <div class="acts">
+        <button class="btn sec" id="btnXlsx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>Excel</button>
+        <button class="btn sec" id="btnPdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>PDF</button>
+        <button class="btn" id="btnMonday"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>Enviar a Monday</button>
       </div>
     </div>
   </section>
 
   <!-- Módulo: Drag and drop -->
   <section id="m1" hidden>
-    <button class="back" data-go="home">← Volver</button>
-    <h2>Arrastra una OI hecha a mano</h2>
-    <p class="sub">Se lee en tu equipo; no se sube a ningún servidor.</p>
-    <label class="drop" id="drop" style="margin-top:14px">
+    <h1 class="large">Arrastra una OI</h1>
+    <p class="lead">Se lee en tu equipo; no se sube a ningún servidor.</p>
+    <label class="drop" id="drop">
       <input type="file" id="file" class="hidden-input" accept=".xlsx,.xlsm">
+      <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5"/><path d="M12 3v12"/></svg></span>
       <strong>Arrastra la OI aquí o haz clic para elegirla</strong>
       <small>Acepta .xlsx y .xlsm</small>
     </label>
-    <div id="m1Err" class="err"></div>
+    <div id="m1Err" class="err" role="alert"></div>
     <div id="m1Body" hidden>
-      <div class="card">
-        <div class="row" style="margin-top:0;justify-content:space-between">
-          <h3 style="margin:0">Datos para el brief de Monday</h3>
-          <label class="lbl">Hoja: <select id="sheetPick" style="width:auto;margin-left:6px"></select></label>
+      <div class="group">
+        <div class="ghead"><h3>Datos para el brief de Monday</h3>
+          <label class="sheetpick">Hoja <select id="sheetPick"></select></label></div>
+        <div class="card">
+          <p class="note" id="m1Found" style="margin:0 0 16px"></p>
+          <div class="grid" id="m1Monday"></div>
+          <div id="m1SendErr" class="err" role="alert"></div>
+          <div class="row">
+            <button class="btn" id="m1Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>Abrir form prellenado</button>
+            <button class="btn sec" id="m1Pdf">Descargar PDF de la OI</button>
+            <button class="btn plain" id="m1Copy">Copiar link</button>
+          </div>
+          <textarea class="linkbox" id="m1LinkText" readonly hidden aria-label="Link prellenado"></textarea>
+          <div class="len" id="m1Len"></div>
+          <div class="callout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <span><b>En el form completa a mano</b> el Calendario y adjunta el PDF en "Adjuntos". Al abrir el form, el PDF se descarga automáticamente.</span></div>
         </div>
-        <p class="note" id="m1Found"></p>
-        <div class="grid" id="m1Monday" style="margin-top:12px"></div>
-        <div class="row">
-          <button class="btn" id="m1Send">Abrir form prellenado</button>
-          <button class="btn sec" id="m1Pdf">Descargar PDF de la OI</button>
-          <button class="btn sec" id="m1Copy">Copiar link</button>
-        </div>
-        <div id="m1SendErr" class="err"></div>
-        <textarea class="linkbox" id="m1LinkText" readonly hidden></textarea>
-        <div class="len" id="m1Len"></div>
-        <p class="note"><b>En el form completa a mano:</b> el <b>Calendario</b> (las fechas van escritas en "Especificaciones Calendario") y adjunta el PDF en "Adjuntos". Al abrir el form, el PDF se descarga automáticamente.</p>
       </div>
-      <div class="card">
-        <h3 style="margin-top:0">Vista previa de la hoja</h3>
-        <div class="preview" id="preview"></div>
+      <div class="group">
+        <div class="ghead"><h3>Vista previa de la hoja</h3></div>
+        <div class="card"><div class="preview" id="preview"></div></div>
       </div>
     </div>
   </section>
 </main>
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
 
 <script>/*!
 
@@ -632,7 +745,7 @@ const EMB_PLANTILLA_B64="UEsDBBQAAAAIAOpwXV1Gx01IlwAAAM0AAAAQAAAAZG9jUHJvcHMvYXB
 <script>
 "use strict";
 /* ================== Configuración ================== */
-const APP_VERSION = "1.1.0";
+const APP_VERSION = "1.2.0";
 const REPO_RAW = "https://raw.githubusercontent.com/idhernandezr/oi-catalogos/main/";
 const REPO_WEB = "https://github.com/idhernandezr/oi-catalogos";
 const MAX_LINES = 15;
@@ -690,14 +803,14 @@ async function updateFromRepo(){
     let msg=`Catálogo actualizado (${esc(CAT.version||"")}).`;
     if(fails) msg+=` ${fails} archivo(s) no se pudieron descargar; se usa la copia local.`;
     if(ver.app && cmpVer(ver.app,APP_VERSION)>0){
-      msg+=` <br>Hay una nueva versión de esta herramienta (${esc(ver.app)}). <a href="${REPO_RAW}oi_generador.html" download>Descárgala aquí</a>.`;
+      msg=`Nueva versión ${esc(ver.app)}: <a href="${REPO_RAW}oi_generador.html" download>descárgala</a> · `+msg;
       st.className="status warn";
     } else st.className="status ok";
     if(ver.mensaje) msg+=`<br>${esc(ver.mensaje)}`;
-    st.innerHTML=msg;
+    st.innerHTML=msg; st.title=st.textContent;
   }catch(e){
     st.className="status warn";
-    st.textContent=`Sin conexión al repositorio: se usa el catálogo guardado (${CAT.version||"incrustado"}).`;
+    st.textContent=`Sin conexión al repositorio: se usa el catálogo guardado (${CAT.version||"incrustado"}).`; st.title=st.textContent;
   }
   refreshCatalogUI();
 }
@@ -844,7 +957,7 @@ function renderLines(){
 function updateTotals(){
   const tot=LINES.reduce((s,L)=>s+(Number(L.inversion)||0),0);
   $("totalInv").textContent=money(tot);
-  $("lineCount").textContent=`· ${LINES.length} de ${MAX_LINES} líneas`;
+  $("lineCount").textContent=`${LINES.length} de ${MAX_LINES} líneas`;
   $("addLine").hidden=LINES.length>=MAX_LINES;
   autoTipoSolicitud();
 }
@@ -1160,7 +1273,7 @@ function refreshCatalogUI(){
   Object.values(keep).forEach(([p,k,v])=>{ if(v && (!Array.isArray(v)||v.length)) setVal(p,k,v); });
   LINES.forEach(L=>{ if(L.cat && !prodItem(L)){ L.prod=""; } }); renderLines();
 }
-function go(id){ ["home","m1","m2"].forEach(s=>$(s).hidden=s!==id); window.scrollTo(0,0); }
+function go(id){ ["home","m1","m2"].forEach(s=>$(s).hidden=s!==id); $("navBack").hidden=id==="home"; $("navTitle").textContent={home:"Generador de OI",m1:"Arrastra una OI",m2:"Genera tu OI"}[id]; window.scrollTo(0,0); }
 document.addEventListener("click",e=>{ const g=e.target.closest("[data-go]"); if(g) go(g.dataset.go);
   const d=e.target.closest("[data-del]"); if(d){ LINES.splice(+d.dataset.del,1); renderLines(); showErr("m2Err",[]); } });
 $("lines").addEventListener("change",onLineInput);
@@ -1168,7 +1281,7 @@ $("lines").addEventListener("input",e=>{ if(["tarifa","inversion"].includes(e.ta
 $("addLine").onclick=()=>{ if(LINES.length<MAX_LINES){ LINES.push(emptyLine(LINES[LINES.length-1])); renderLines(); } };
 document.addEventListener("input",e=>{ if(e.target.classList.contains("bad")) e.target.classList.remove("bad"); });
 
-async function guard(btn,fn){ const t=btn.textContent; btn.disabled=true; btn.textContent="Generando…"; try{ await fn(); }catch(e){ console.error(e); toast("Error: "+e.message); } finally{ btn.disabled=false; btn.textContent=t; } }
+async function guard(btn,fn){ btn=btn.closest("button")||btn; const t=btn.innerHTML; btn.disabled=true; btn.textContent="Generando…"; try{ await fn(); }catch(e){ console.error(e); toast("Error: "+e.message); } finally{ btn.disabled=false; btn.innerHTML=t; } }
 $("btnXlsx").onclick=e=>{ const errs=validateOI(); showErr("m2Err",errs); if(errs.length) return;
   guard(e.target,async()=>{ const D=collectOI(); download(await buildXlsx(D),fileBase(D)+".xlsx"); toast("Excel descargado"); }); };
 $("btnPdf").onclick=e=>{ const errs=validateOI(); showErr("m2Err",errs); if(errs.length) return;
